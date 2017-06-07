@@ -1,3 +1,7 @@
+# Note 👷
+
+**This repository is at the forefront of development work.** 🚧
+
 # AutoSeed
 
 Automatically generate records from ActiveRecord models. It is for development and staging.
