@@ -24,7 +24,7 @@ Or install it yourself as:
 
 In your db/seeds.rb:
 
-```
+```ruby
 require 'auto_seed'
 AutoSeed::Sower.new.sow_all
 ```
