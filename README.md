@@ -1,8 +1,8 @@
 # AutoSeed
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/auto_seed`. To experiment with that code, run `bin/console` for an interactive prompt.
+Automatically generate records from ActiveRecord models. It is for development and staging.
 
-TODO: Delete this and the text above, and describe your gem
+If you want dummy data in database, it help you. 🍊
 
 ## Installation
 
@@ -22,7 +22,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In your db/seeds.rb:
+
+```
+require 'auto_seed'
+AutoSeed::Sower.new.sow_all
+```
+
+And then execute:
+
+    $ rails db:seed
 
 ## Development
 
@@ -32,7 +41,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Kotaro Mochizuki/auto_seed.
+Bug reports and pull requests are welcome on GitHub at https://github.com/basicinc/auto_seed.
 
 
 ## License
