@@ -5,7 +5,7 @@ class AutoSeed::Params
     @columns = columns
   end
 
-  # @return [Hash] attributes
+  # @return [Hash] attributes for model
   def generate
     params_from_columns
   end
@@ -37,6 +37,14 @@ class AutoSeed::Params
       'sample_varchar'
     when /datetime/
       DateTime.now
+    when /tinyint/
+      rand(1)
+    when /int/
+      rand(9999)
+    when /text/
+      'sample_text'
+    else
+      'you should check sql_type'
     end
   end
 
