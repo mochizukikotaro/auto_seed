@@ -13,6 +13,12 @@ module AutoSeed
 
   class Sower
     def sow_all
+
+      puts "
+      ===================
+      test start
+      ==================="
+
       sowed_tables = []
 
       table_names.each do |name|

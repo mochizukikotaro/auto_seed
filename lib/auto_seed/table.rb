@@ -27,7 +27,7 @@ class AutoSeed::Table
   def parent
     model = @name.classify.constantize
     parent_name = model.reflect_on_all_associations(:belongs_to)
-                        .map(&:name).first.to_s
+    .map(&:name).first.to_s
     return nil if parent_name.blank?
     AutoSeed::Table.new(parent_name)
   end
@@ -51,20 +51,15 @@ class AutoSeed::Table
   end
 
   def sow_with_parent
-    parent.model.all.each do |parent_obj|
-      1.upto(2) do |i|
-        params = AutoSeed::Params.new(self.name).generate
-
-        # NOTE: 以下のような生成方法にすることで、
-        # foreign_key の値にランダム値が入っていても気にしない
-        parent_obj.send(self.name).create(params)
-      end
+    1.upto(2) do |i|
+      params = AutoSeed::Params.new(self).generate
+      @model.create(params)
     end
   end
 
   def sow_without_parent
     1.upto(2) do |i|
-      params = AutoSeed::Params.new(self.name).generate
+      params = AutoSeed::Params.new(self).generate
       @model.create(params)
     end
   end
