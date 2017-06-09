@@ -10,7 +10,6 @@ class AutoSeed::Params
   def generate
     params = {}
     @columns.each do |column|
-      binding.pry
       if @foreign_keys.include?(column.name)
         params[column.name] = foreign_id(column.name)
       else

@@ -39,23 +39,7 @@ class AutoSeed::Table
     tables
   end
 
-  # table names of parents & self
-  # @return [Array<String>]
-  def target_names
-    @target_names = []
-    insert_name(self)
-    @target_names
-  end
-
-
   private
-
-  def insert_name(table)
-    @target_names << table.name
-    if table.parent
-      insert_name(table.parent)
-    end
-  end
 
   def sow_with_parent
     1.upto(2) do |i|

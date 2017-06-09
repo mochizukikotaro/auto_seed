@@ -19,16 +19,9 @@ module AutoSeed
       test start
       ==================="
 
-      sowed_tables = []
-
       table_names.each do |name|
-
-        # NOTE: 一度種撒かれたものはスキップ
-        next if sowed_tables.include?(name)
-
         table = AutoSeed::Table.new(name)
         table.sow
-        sowed_tables += table.target_names
       end
     end
 
