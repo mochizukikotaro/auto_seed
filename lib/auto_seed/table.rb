@@ -2,6 +2,8 @@ class AutoSeed::Table
 
   require_relative './params'
 
+  @@sowed_table_names = []
+
   attr_reader :name, :model
 
   # @param [String] table name
@@ -13,23 +15,28 @@ class AutoSeed::Table
 
   # 種をまく人
   def sow
-    if parent
-      parent.sow
-      sow_with_parent
-    else
+    if parents.blank?
       sow_without_parent
+    else
+      parents.each do |parent|
+        next if @@sowed_table_names.include?(parent.name)
+        parent.sow
+      end
+      sow_with_parent
     end
   end
 
 
-  # @return [String] parent table
-  # @return [Nil]
-  def parent
+  # @return [Array<String>] parent table
+  def parents
     model = @name.classify.constantize
-    parent_name = model.reflect_on_all_associations(:belongs_to)
-    .map(&:name).first.to_s
-    return nil if parent_name.blank?
-    AutoSeed::Table.new(parent_name)
+    parent_names = model.reflect_on_all_associations(:belongs_to)
+    .map(&:name).map(&:to_s)
+    tables = []
+    parent_names.each do |name|
+      tables << AutoSeed::Table.new(name)
+    end
+    tables
   end
 
   # table names of parents & self
@@ -55,6 +62,7 @@ class AutoSeed::Table
       params = AutoSeed::Params.new(self).generate
       @model.create(params)
     end
+    @@sowed_table_names << @name
   end
 
   def sow_without_parent
@@ -62,7 +70,7 @@ class AutoSeed::Table
       params = AutoSeed::Params.new(self).generate
       @model.create(params)
     end
+    @@sowed_table_names << @name
   end
-
 
 end
